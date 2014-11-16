@@ -1,0 +1,339 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Declarations (skip to Begin Document, line 88, for parts you fill in)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt]{article}
+
+\usepackage{geometry}  % Lots of layout options.  See http://en.wikibooks.org/wiki/LaTeX/Page_Layout
+\geometry{letterpaper}  % ... or a4paper or a5paper or ... 
+\usepackage{fullpage}  % somewhat standardized smaller margins (around an inch)
+\usepackage{setspace}  % control line spacing in latex documents
+\usepackage[parfill]{parskip}  % Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{amsmath,amssymb}  % latex math
+\usepackage{empheq} % http://www.ctan.org/pkg/empheq
+\usepackage{bm,upgreek}  % allows you to write bold greek letters (upper & lower case)
+
+% for typsetting algorithm pseudocode see http://en.wikibooks.org/wiki/LaTeX/Algorithms_and_Pseudocode
+\usepackage{algorithmic,algorithm}  
+
+\usepackage{graphicx}  % inclusion of graphics; see: http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+% allow easy inclusion of .tif, .png graphics
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\usepackage{subfigure}  % allows subfigures in figure
+
+\usepackage{xspace}
+\newcommand{\latex}{\LaTeX\xspace}
+
+\usepackage{color}  % http://en.wikibooks.org/wiki/LaTeX/Colors
+
+\long\def\ans#1{{\color{blue}{\em #1}}}
+\long\def\ansnem#1{{\color{blue}#1}}
+\long\def\boldred#1{{\color{red}{\bf #1}}}
+\long\def\boldred#1{\textcolor{red}{\bf #1}}
+\long\def\boldblue#1{\textcolor{blue}{\bf #1}}
+
+% Useful package for syntax highlighting of specific code (such as python) -- see below
+\usepackage{listings}  % http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{textcomp}
+
+%%% The following lines set up using the listings package
+\renewcommand{\lstlistlistingname}{Code Listings}
+\renewcommand{\lstlistingname}{Code Listing}
+
+%%% Specific for python listings
+\definecolor{gray}{gray}{0.5}
+\definecolor{green}{rgb}{0,0.5,0}
+
+\lstnewenvironment{python}[1][]{
+\lstset{
+language=python,
+basicstyle=\footnotesize,  % could also use this -- a little larger \ttfamily\small\setstretch{1},
+stringstyle=\color{red},
+showstringspaces=false,
+alsoletter={1234567890},
+otherkeywords={\ , \}, \{},
+keywordstyle=\color{blue},
+emph={access,and,break,class,continue,def,del,elif ,else,%
+except,exec,finally,for,from,global,if,import,in,i s,%
+lambda,not,or,pass,print,raise,return,try,while},
+emphstyle=\color{black}\bfseries,
+emph={[2]True, False, None, self},
+emphstyle=[2]\color{green},
+emph={[3]from, import, as},
+emphstyle=[3]\color{blue},
+upquote=true,
+morecomment=[s]{"""}{"""},
+commentstyle=\color{gray}\slshape,
+emph={[4]1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+emphstyle=[4]\color{blue},
+literate=*{:}{{\textcolor{blue}:}}{1}%
+{=}{{\textcolor{blue}=}}{1}%
+{-}{{\textcolor{blue}-}}{1}%
+{+}{{\textcolor{blue}+}}{1}%
+{*}{{\textcolor{blue}*}}{1}%
+{!}{{\textcolor{blue}!}}{1}%
+{(}{{\textcolor{blue}(}}{1}%
+{)}{{\textcolor{blue})}}{1}%
+{[}{{\textcolor{blue}[}}{1}%
+{]}{{\textcolor{blue}]}}{1}%
+{<}{{\textcolor{blue}<}}{1}%
+{>}{{\textcolor{blue}>}}{1},%
+%framexleftmargin=1mm, framextopmargin=1mm, frame=shadowbox, rulesepcolor=\color{blue},#1
+framexleftmargin=1mm, framextopmargin=1mm, frame=single,#1
+}}{}
+%%% End python code listing definitions
+
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\cov}{cov}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Begin Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+    {\Large {\bf ISTA 421/521 -- Homework 3}} \\
+    \boldred{Due: Tuesday, October 14, 10pm} \\
+    20 pts total for Undergrads, 25 pts total for Grads
+\end{center}
+
+\begin{flushright}
+Emanuel Carlos de Alcantara Valente%% Fill in your name here
+
+Undergraduate %% select which you are!
+\end{flushright}
+
+\vspace{1cm}
+{\Large {\bf Instructions}}
+
+In this assignment you are required to modify/write 2 scripts in python.  Details of what you are to do are specified in problems 2 and 7, below.
+
+Included in the homework 3 release are following sample scripts:
+\begin{itemize}
+\item {\tt approx\_expected\_value.py} - This script demonstrates how to approximate an expected value through sampling.  You will modify this code and submit your solution for problem 2.
+\item {\tt gauss\_surf.py} - This is provided for fun -- it is not required for any problem here.  It generates a 2d multivariate Gaussian and plots it as both a contour and surface plot.
+\item {\tt predictive\_variance\_example.py} - This script demonstrates (a) generating and plotting error bars (predictive variance) and (b) sampling of model parameters from the $\cov\{\widehat{\mathbf{w}}\}$ estimated from data.  You will run this script in problem 6, and then use it as the basis for a script in problem 7.
+\item {\tt w\_variation\_demo.py} - This script is also provided for fun and is not required for the assignment. (It also provides more example python code!)  This implements the simulated experiment demonstrating the theoretical and empirical bias in the estimate of variance, $\widehat{\sigma^2}$, of the model variance, $\sigma^2$, as a function of the sample size used for estimation.
+\end{itemize}
+
+All problems require that you provide some ``written'' answer (in some cases also figures), so you will also submit a .pdf of your written answers.  (You can use \latex or any other system (including handwritten; plots, of course, must be program-generated) as long as the final version is in PDF.)
+
+\boldred{The final submission will include (minimally) the two scripts and a PDF version of your written part of the assignment.  You are required to create either a .zip or tarball (.tar.gz / .tgz) archive of all of the files for your submission and submit your archive to the d2l dropbox by the date/time deadline above.}
+
+NOTE: Problems 4 and 8 are required for Graduate students only; Undergraduates may complete them for extra credit equal to the point value.
+
+(FCMA refers to the course text: Rogers and Girolami (2012), {\em A First Course in Machine Learning}.  For general notes on using \latex to typeset math, see: {\tt http://en.wikibooks.org/wiki/LaTeX/Mathematics})
+\vspace{.5cm}
+
+%%%%%%%%%%%%%%%%
+%%%     Problems
+%%%%%%%%%%%%%%%%
+
+\newpage
+\begin{itemize}
+
+%%%     Problem 1
+\item[1.] [2 points]
+Adapted from {\bf Exercise 2.3} of FCMA p.90:
+
+Let $Y$ be a random variable that can take any positive integer value.  The likelihood of these outcomes is given by the Poisson pmf (probability mass function):
+\begin{eqnarray}
+p(y) = {\lambda^y\over y!} e^{-\lambda}
+\end{eqnarray}
+By using the fact that for a discrete random variable the pmf gives the probabilities of the individual events occurring and the probabilities are additive...
+\begin{enumerate}
+\item[(a)] Compute the probability that $Y \leq 6$ for $\lambda = 8$, i.e., $P(Y \leq 6)$.  Write a (very!) short python script to compute this value, and include a listing of the code in your solution.
+\item[(b)] Using the result of (a) and the fact that one outcome has to happen, compute the probability that $Y > 6$.
+\end{enumerate}
+
+{\bf Solution.} 
+
+a)
+
+\begin{python}[caption={ {\tt poisson.py} script}, label=poisson]
+
+#!/usr/bin/python
+import math, sys
+
+def poisson_probability(y, lamb):
+	sum = 0.0;
+	for i in range(y + 1):
+		sum += (math.pow(lamb, i) * math.exp(-lamb)) / math.factorial(i)
+	return sum
+	
+y = 6
+lamb = 8
+prob = poisson_probability(y, lamb)
+print "The Poisson probability is ", prob
+
+\end{python}
+
+\begin{verbatim}
+[emanuel@localhost submit]$ python poisson.py 
+The Poisson probability is  0.313374277536
+
+\end{verbatim}
+
+As we saw above, $P(Y \leq 6) = 0.3133742$
+
+b)
+
+$P(Y > 6) = 1 - P(Y \leq 6) = 1 - 0.3133742 = 0.6866257$
+
+
+
+%%%     Problem 2
+\item[2.] [3 points]
+Adapted from {\bf Exercise 2.4} of FCMA p.90:
+
+Let $X$ be a random variable with uniform density, $p(x) = \mathcal{U}(a,b)$.  Derive $\mathbf{E}_{p(x)} \{ 1 + 0.1x + 0.5x^2 + 0.05x^3 \}$.  Work out analytically $\mathbf{E}_{p(x)} \left\{ 1 + 0.1x + 0.5x^2 + 0.05x^3 \right\}$ for $a=-10$, $b=5$ (show the steps).  
+
+The script {\tt approx\_expected\_value.py} demonstrates how you use random samples to approximate an expectation, as described in Section 2.5.1 of the book.  The script estimates the expectation of the function $y^2$ when $Y \sim \mathcal{U}(0,1)$ (that is, $y$ is uniformly distributed between $0$ and $1$).  This script shows a plot of how the estimation improves as larger samples are considered, up to 100 samples.
+
+Modify the script {\tt approx\_expected\_value.py} to compute a sample-based approximation to the expectation of the function $1 + 0.1x + 0.5x^2 + 0.05x^3$ when $X \sim \mathcal{U}(-10,5)$ and observe how the approximation improves with the number of samples drawn.  Include a plot showing the evolution of the approximation, relative to the true value, over 3,000 samples.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+%%% For latex users: code to insert figure, and update the caption to describe the figure!
+%\begin{figure}[htb]
+%\begin{center}
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%
+%\caption{Caption here...}
+%
+%\end{center}
+%\end{figure}
+
+
+
+%%%     Problem 3
+\item[3.] [3 points]
+Adapted from {\bf Exercise 2.5} of FCMA p.91:
+
+Assume that $p(\mathbf{w})$ is the Gaussian pdf for a $D$-dimensional vector $\mathbf{w}$ given in
+\begin{eqnarray*}
+p(\mathbf{w}) = \frac{1}{(2 \pi)^{D/2} | \mathbf{\Sigma} |^{1/2}} \exp \left\{ -\frac{1}{2} (\mathbf{w} - \mathbf{\mu})^\top \mathbf{\Sigma}^{-1} (\mathbf{w} - \mathbf{\mu}) \right\} .
+\end{eqnarray*}
+By expanding the vector notation and re-arranging, show that using $\mathbf{\Sigma} = \sigma^2 \mathbf{I}$ as the covariance matrix assumes independence of the $D$ elements of $\mathbf{w}$.  You will need to be aware that the determinant of a matrix that only has entries on the diagonal ($|\sigma^2 \mathbf{I}|$) is the product of the diagonal values and that the inverse of the same matrix is constructed by simply inverting each element on the diagonal.  (Hint, a product of exponentials can be expressed as an exponential of a sum.  Also, just a reminder that $\exp\{x\}$ is $e^x$.)
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 4
+\item[4.] [2 points; \boldred{Required only for Graduates}]
+Adapted from {\bf Exercise 2.6} of FCMA p.91:
+
+Using the same setup as in Problem 4, see what happens if we use a diagonal covariance matrix with different elements on the diagonal, i.e.,
+\begin{eqnarray*}
+\mathbf{\Sigma} = 
+\begin{bmatrix}
+\sigma_1^2 & 0 & \cdots & 0 \\
+0 & \sigma_2^2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma_D^2
+\end{bmatrix}
+\end{eqnarray*}
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 5
+\item[5.] [4 points]
+Adapted from {\bf Exercise 2.9} of FCMA p.91:
+
+Assume that a dataset of $N$ binary values, $x_1, ..., x_n$, was sampled from a Bernoulli distribution, and each sample $x_i$ is independent of any other sample.  Explain why this is {\em not} a Binomial distribution.  Derive the maximum likelihood estimate for the Bernoulli parameter.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 6
+\item[6.] [3 points]
+Adapted from {\bf Exercise 2.12} of FCMA p.91:
+
+Familiarize yourself with the provided script {\tt predictive\_variance\_example.py}.  When you run it, it will generate a dataset and then remove all values for which $-2 \leq x \leq 2$.  Observe the effect this has on the predictive variance in this range.  Plot (a) the data, (b) the error bar plots for model orders 1, 3, 5 and 9, and (c) the sampled functions for model orders 1, 3, 5 and 9.  You will plot a total of 9 figures.  Include a caption for each figure that qualitatively describes what the figure shows.  Also, clearly explain what removing the points has done in contrast to when they're left in.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+%%% For latex users: code to insert figure, and update the caption to describe the figure!
+%\begin{figure}[htb]
+%\begin{center}
+%\includegraphics[width=10cm]{figs/}
+%\caption{Caption here...}
+%\end{center}
+%\end{figure}
+
+%%% For latex users: code to insert figure, and update the caption to describe the figure!
+%\begin{figure}[htb]
+%\begin{center}
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%
+%\caption{Caption here...}
+%\end{center}
+%\end{figure}
+
+
+%%%     Problem 7
+\item[7.] [5 points]
+
+In this exercise, you will create a simple demonstration of how model bias impacts variance, similar to the demonstration in class.  Using the same true model in the script {\tt predictive\_variance\_example.py}, that is $t = 1 + 0.1x + 0.5x^2 + 0.05x^3$, generate 20 data sets, each consisting of 25 samples from the true function (using the same range of $x \in [-12.0,5.0]$).  Then, create a separate plot for each of the model polynomial orders 1, 3, 5 and 9, in which you plot the true function in red and each of the best fit functions of that model order to the 20 data sets.  You will therefore produce four plots.  The first will be for model order 1 and will include the true model plotted in red and then 20 curves, one each for an order 1 best fit model for each of the 20 data set, for all data sets.  The second plot will repeat this for model order 3, and so on.  You can use any of the code in the script {\tt predictive\_variance\_example.py} as a guide.  Describe what happens to the variance in the functions as the model order is changed.  (tips: plot the true function curve last, so it is plotted on top of the others; also, use {\tt linewidth=3} in the plot fn to increase the line width to make the curve stand out more.)
+
+{\bf Solution.} $<$Solution goes here$>$
+
+%%% For latex users: code to insert figure, and update the caption to describe the figure!
+%\begin{figure}[htb]
+%\begin{center}
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%\subfigure[]{
+%\includegraphics[width=.48\textwidth]{figs/}
+%}
+%
+%\caption{Caption here...}
+%\end{center}
+%\end{figure}
+
+
+
+%%%     Problem 8
+\item[8.] [3 points; \boldred{Required only for Graduates}]
+Adapted from {\bf Exercise 2.13} of FCMA p.92:
+
+Compute the Fisher Information Matrix for the parameter of a Bernoulli distribution.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+\end{itemize}
+
+\end{document}

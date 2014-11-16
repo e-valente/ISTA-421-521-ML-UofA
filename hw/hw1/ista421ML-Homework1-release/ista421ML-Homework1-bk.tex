@@ -1,0 +1,347 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Declarations (skip to Begin Document, line 112, for parts you fill in)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt]{article}
+
+\usepackage{geometry}  % Lots of layout options.  See http://en.wikibooks.org/wiki/LaTeX/Page_Layout
+\geometry{letterpaper}  % ... or a4paper or a5paper or ... 
+\usepackage{fullpage}  % somewhat standardized smaller margins (around an inch)
+\usepackage{setspace}  % control line spacing in latex documents
+\usepackage[parfill]{parskip}  % Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{amsmath,amssymb}  % latex math
+\usepackage{empheq} % http://www.ctan.org/pkg/empheq
+\usepackage{bm,upgreek}  % allows you to write bold greek letters (upper & lower case)
+
+% for typsetting algorithm pseudocode see http://en.wikibooks.org/wiki/LaTeX/Algorithms_and_Pseudocode
+\usepackage{algorithmic,algorithm}  
+
+\usepackage{graphicx}  % inclusion of graphics; see: http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+% allow easy inclusion of .tif, .png graphics
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\usepackage{color}  % http://en.wikibooks.org/wiki/LaTeX/Colors
+
+\long\def\ans#1{{\color{blue}{\em #1}}}
+\long\def\ansnem#1{{\color{blue}#1}}
+\long\def\boldred#1{{\color{red}{\bf #1}}}
+
+% Useful package for syntax highlighting of specific code (such as python) -- see below
+\usepackage{listings}  % http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{textcomp}
+
+%%% The following lines set up using the listings package
+\renewcommand{\lstlistlistingname}{Code Listings}
+\renewcommand{\lstlistingname}{Code Listing}
+
+%%% Specific for python listings
+\definecolor{gray}{gray}{0.5}
+\definecolor{green}{rgb}{0,0.5,0}
+
+\lstnewenvironment{python}[1][]{
+\lstset{
+language=python,
+basicstyle=\footnotesize,  % could also use this -- a little larger \ttfamily\small\setstretch{1},
+stringstyle=\color{red},
+showstringspaces=false,
+alsoletter={1234567890},
+otherkeywords={\ , \}, \{},
+keywordstyle=\color{blue},
+emph={access,and,break,class,continue,def,del,elif ,else,%
+except,exec,finally,for,from,global,if,import,in,i s,%
+lambda,not,or,pass,print,raise,return,try,while},
+emphstyle=\color{black}\bfseries,
+emph={[2]True, False, None, self},
+emphstyle=[2]\color{green},
+emph={[3]from, import, as},
+emphstyle=[3]\color{blue},
+upquote=true,
+morecomment=[s]{"""}{"""},
+commentstyle=\color{gray}\slshape,
+emph={[4]1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+emphstyle=[4]\color{blue},
+literate=*{:}{{\textcolor{blue}:}}{1}%
+{=}{{\textcolor{blue}=}}{1}%
+{-}{{\textcolor{blue}-}}{1}%
+{+}{{\textcolor{blue}+}}{1}%
+{*}{{\textcolor{blue}*}}{1}%
+{!}{{\textcolor{blue}!}}{1}%
+{(}{{\textcolor{blue}(}}{1}%
+{)}{{\textcolor{blue})}}{1}%
+{[}{{\textcolor{blue}[}}{1}%
+{]}{{\textcolor{blue}]}}{1}%
+{<}{{\textcolor{blue}<}}{1}%
+{>}{{\textcolor{blue}>}}{1},%
+%framexleftmargin=1mm, framextopmargin=1mm, frame=shadowbox, rulesepcolor=\color{blue},#1
+framexleftmargin=1mm, framextopmargin=1mm, frame=single,#1
+}}{}
+%%% End python code listing definitions
+
+%%% Specific for matlab listings
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+ 
+\lstnewenvironment{matlab}[1][]{
+\lstset{ %
+  language=Matlab,                % the language of the code
+  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=t,                   % sets the caption-position to top
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*,...}               % if you want to add more keywords to the set
+  framexleftmargin=1mm, framextopmargin=1mm, frame=single,#1 % display caption
+} }{}
+%%% End matlab code listing definitions
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Begin Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+    {\Large {\bf ISTA 421/521 -- Homework 1}} \\
+    % {\Large {\bf \ans{Answers}}} \\
+    Due: Friday, September 5, 5pm (to the class D2L dropbox) \\
+    8 points total
+\end{center}
+
+\begin{flushright}
+STUDENT NAME  %% Fill in your name here
+
+Undergraduate / Graduate %% select which you are!
+\end{flushright}
+
+\vspace{1cm}
+All written portions of the homework must be submitted to the D2L dropbox as a .pdf.
+
+In the following, FCMA refers to the course text: Simon Rogers and Mark Girolami (2012), {\em A First Course in Machine Learning}.  (All questions from the book are reproduced here in full, so you do not need the book to proceed.)
+
+For general notes on using latex to typeset math, see: {\tt http://en.wikibooks.org/wiki/LaTeX/Mathematics}
+\vspace{.5cm}
+
+%%%%%%%%%%%%%%%%
+%%%     Problems
+%%%%%%%%%%%%%%%%
+
+\begin{enumerate}
+
+%%%     Problem 1
+\item[1.]
+{\bf Exercise 1.1} from FCMA p.35 [0.5 pts]
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=6cm]{figs/figure1-1_p2}
+\caption{Reproduction of figure 1.1, Olympic men's 100m data}
+\end{center}
+\end{figure}
+By examining Figure 1.1 [from p. 2 of FCMA, reproduced here], estimate (by hand / in your head) the kind of values we should expect for $w_0$ and $w_1$ (e.g., High? Low?  Positive?  Negative?).
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+\end{enumerate}
+
+\newpage
+%%% Note for next three problems:
+NOTE: The following three exercises (2, 3, and 4) review basic linear algebra concepts; we will review these briefly in Lecture 3.  
+\begin{enumerate}
+
+\item[] Notation conventions:
+\begin{itemize}
+\item Script variables, such as $x_{n2}$ and $w_1$ represent scalar values
+\item Lowercase bold-face variables, such as $\mathbf{x}_n$ and $\mathbf{w}$, represent vectors
+\item Uppercase bold-face variables, such as $\mathbf{X}$, represent $n$ (rows) $\times ~m$ (columns) matrices
+\item Note that because all indexes in the following are either a value between 0, 1, ..., 9, or a scalar, $n$, I am representing multiple dimension indexes without a comma, as it is unambiguous; e.g., $x_{32}$ is the element scalar value of $\mathbf{X}$ at row 3, column 2.  When we have to refer to specific index values greater than 9, we'll use commas, such as $x_{32,3}$ is the scalar value in the 32nd row and 3rd column.
+\item `$\top$' in expressions like $\mathbf{w}^\top$ indicates the transpose operator.
+\end{itemize}
+
+%%%     Problem 2
+\item[2.]
+{\bf Exercise 1.3} from FCMA p.35  [1pt]
+
+Show that:
+\begin{eqnarray*}
+\mathbf{w}^\top\mathbf{X}^\top\mathbf{X}\mathbf{w} = w_0^2 \left( \sum_{n=1}^N x_{n1}^2 \right) + 2w_0w_1 \left( \sum_{n=1}^N x_{n1}x_{n2} \right) + w_1^2 \left( \sum_{n=1}^N x_{n2}^2 \right),
+\end{eqnarray*}
+where
+\begin{eqnarray*}
+\mathbf{w} = 
+    \begin{bmatrix}
+    w_0 \\[0.3em]
+    w_1
+    \end{bmatrix}
+    ,
+\mathbf{X} = 
+    \begin{bmatrix}
+    x_{11} & x_{12} \\[0.3em]
+    x_{21} & x_{22} \\[0.3em]
+    x_{31} & x_{32} \\[0.3em]
+    \vdots & \vdots \\[0.3em]
+    x_{N1} & x_{N2}
+    \end{bmatrix}
+    .
+\end{eqnarray*}
+(Hint -- it's probably easiest to do the $\mathbf{X}^\top\mathbf{X}$ first!)
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+%%%     Problem 3
+\item[3.]
+{\bf Exercise 1.4} from FCMA p.35  [1pt]
+
+Using $\mathbf{w}$ and $\mathbf{X}$ as defined in the previous exercise, show that ${(\mathbf{X}\mathbf{w})}^\top = {\mathbf{w}}^\top{\mathbf{X}}^\top$ by multiplying out both sides.
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+%%%     Problem 4
+\item[4.]
+{\bf Exercise 1.5} from FCMA p.35  [1pt]
+
+When multiplying a scalar by a vector (or matrix), we multiply each element of the vector (or matrix) by that scalar.  For $\mathbf{x}_n = {[ x_{n1}, x_{n2} ]}^\top$, $\mathbf{t} = {[ t_1,...,t_N ]}^\top$, $\mathbf{w} = {[ w_0, w_1 ]}^\top$, and
+\begin{eqnarray*}
+\mathbf{X} = 
+    \begin{bmatrix}
+    {\mathbf{x}_{1}}^\top \\[0.3em]
+    {\mathbf{x}_{2}}^\top \\[0.3em]
+    \vdots \\[0.3em]
+    {\mathbf{x}_{N}}^\top
+    \end{bmatrix}
+\end{eqnarray*}
+show that
+\begin{eqnarray*}
+\sum_{n} \mathbf{x}_n t_n = \mathbf{X}^\top\mathbf{t}
+\end{eqnarray*}
+and
+\begin{eqnarray*}
+\sum_{n} \mathbf{x}_n \mathbf{x}_n ^\top \mathbf{w} = \mathbf{X}^\top\mathbf{X} \mathbf{w}
+\end{eqnarray*}
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+\newpage
+%%%     Problem 5
+\item[5.] 
+{\bf Plotting Exercise} -- three parts
+
+\begin{itemize}
+\item[{\bf A.}] [0.5pt] Use the provided python script {\tt plotlinear.py} and plot three lines (parameters of your choosing).  This requires you have you python environment set up.  Place the output graphic in your pdf submission and provide a descriptive caption that indicates the intercept and slope values you used to generate the lines.  (\LaTeX~users can use the commented code in the HW latex template for inserting the figure.)
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+%\begin{figure}[htb]
+%\begin{center}
+%\includegraphics[width=6cm]{figs/figure1-1_p2.png} %% enter path to your figure
+%\caption{Your caption}
+%\end{center}
+%\end{figure}
+
+\item[{\bf B.}] [0.5pt] Now, try another plot: generate a vector whose entries are the values of $\sin(\mathbf{x})$ for $\mathbf{x}$ in the range $[0,10]$ in steps of $0.01$, and plot it.  Label the y-axis `sin(x)', the x-axis 'x values' and provide a title for the plot, `Sine Function for x from 0.0 to 10.0'.  Include your plot in the pdf submission.
+
+%\begin{figure}[htb]
+%\begin{center}
+%\includegraphics[width=8cm]{figs/sinx.png}
+%\caption{$\sin(\mathbf{x})$ for $\mathbf{x}$ in range $[0,10]$ in steps of $0.01$}
+%\end{center}
+%\end{figure}
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+\item[{\bf C.}] [0.5pt] Finally, put your script code in the pdf file.  
+
+For \LaTeX~users: you can use the following python code listing environment.  The code currently listed here is from the {\tt plotlinear.py} script; replace the code there with the code you wrote for generating the $\sin$ function.
+
+%%% Begin python code output
+\begin{python}[caption={Example Code Listing: portion of python {\tt plotlinear.py} script}, label=ex1]
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.ion()
+
+## Request user input
+plt.close();
+plt.figure(1)
+plt.plot()
+print("\nKeeps plotting lines on the current plot until you quit (Ctrl-D) or 
+		enter a non-number");
+while 1:
+    intercept = float(raw_input("Enter intercept: "))
+    gradient = float(raw_input("Enter gradient (slope): "))
+    plt.plot(x, intercept + gradient*x)
+    print "\ny = " + str(intercept) + " + " + str(gradient) + " x\n";
+\end{python}
+%%% End python code output
+
+\end{itemize}
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+\newpage
+%%%     Problem 6
+\item[6.] 
+{\bf More Programming in Python Practice}
+
+\begin{itemize}
+\item[{\bf A.}]  [1pt]
+Write a short script that initializes the random number generator
+\begin{itemize}
+\item[] python: {\tt numpy.random.seed(seed=1)}
+\end{itemize}
+Followed by creating two three-dimensional column vectors using
+\begin{itemize}
+\item[] python: {\tt random.rand} (used in the context of code to generate the vectors)
+\end{itemize}
+Represent the random variables as $\mathbf{a}$ and $\mathbf{b}$ (be sure you issue the call to set the random seed immediately before creating these variables).  Print them at the terminal and copy-and-paste the result here. (If using \LaTeX, use the {\tt verbatim} environment to display).
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+%%% uncomment the following to paste your output.
+%\begin{verbatim}
+%% you output goes here
+%\end{verbatim}
+
+\item[{\bf B.}]  [2pts]
+Using the values of $\mathbf{a}$ and $\mathbf{b}$, compute the following and display the result two ways: (1) copy-and-paste the output (from the python interpreter/terminal; again, in \LaTeX~use the {\tt verbatim} environment), (2) typeset the output (e.g., using the \LaTeX~math environment).
+\begin{enumerate}
+\item[1.] $\mathbf{a} + \mathbf{b} = ~?$
+\item[2.] $\mathbf{a} \circ \mathbf{b} = ~?$  (element-wise multiply; Note: the notation $\mathbf{a} \circ \mathbf{b}$ is also known as the Hadamard product, the entrywise product, or the Schur product.)
+\item[3.] $\mathbf{a}^\top \mathbf{b} = ~?$  (also called the dot-product)
+\end{enumerate}
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+Now, set the random seed to 2 and immediately generate a random $3 \times 3$ matrix $\mathbf{X}$.  In your solution, display the value of $\mathbf{X}$.  Using $\mathbf{X}$ and the earlier values of $a$ and $b$, compute the following in python and typeset the results in two ways, as before.
+\begin{enumerate}
+\item[4.] $\mathbf{a}^\top\mathbf{X} = ~?$
+\item[5.] $\mathbf{a}^\top\mathbf{X}\mathbf{b} = ~?$
+\item[6.] $\mathbf{X}^{-1} = ~?$
+\end{enumerate}
+
+{\bf Solution.} $<$Solution goes here.$>$
+
+
+\end{itemize}
+
+\end{enumerate}
+
+\end{document}

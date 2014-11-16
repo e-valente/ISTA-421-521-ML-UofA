@@ -1,0 +1,51 @@
+#!/usr/bin/python
+import sys
+import datetime
+
+if(len(sys.argv) != 2):
+	print("Usage:\n" +sys.argv[0] + " <filename>")
+	sys.exit(-1)
+
+filename = sys.argv[1]
+
+myfile = open(filename, "rU")
+lines = myfile.readlines()
+
+#gets city,state, and some garbage on the line
+
+min_day_minutes = 10000
+max_day_minutes = 0
+
+for i in range(31):
+	#get day i_th of all months
+	mydaysStr = lines[9+i].replace(',', '')	
+	mydaysList = mydaysStr.split()
+
+	del mydaysList[0]
+	#eg., mydaysList[j] = month j that has day i_th  (sunrise and sunset)
+	for j in range(0,len(mydaysList), 2):
+		#print("sunset: ", mydaysList[j])
+		#print("sunrise: ", mydaysList[j+1])
+
+		sunrise = mydaysList[j]
+		sunset = mydaysList[j+1]
+
+		#print rise_t, set_t
+		sunrise_t = datetime.datetime.strptime(sunrise, "%H%M")
+		sunset_t = datetime.datetime.strptime(sunset, "%H%M")
+
+		delta = sunset_t - sunrise_t
+
+		day = delta.total_seconds()/60
+
+		if day < min_day_minutes:
+			min_day_minutes = day
+
+		if day > max_day_minutes:
+			max_day_minutes = day	
+
+
+print("%.0f %.0f" % (max_day_minutes, min_day_minutes))
+
+
+

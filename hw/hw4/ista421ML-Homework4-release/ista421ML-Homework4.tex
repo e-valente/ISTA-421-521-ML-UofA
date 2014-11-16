@@ -1,0 +1,248 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Declarations (skip to Begin Document, line 88, for parts you fill in)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt]{article}
+
+\usepackage{geometry}  % Lots of layout options.  See http://en.wikibooks.org/wiki/LaTeX/Page_Layout
+\geometry{letterpaper}  % ... or a4paper or a5paper or ... 
+\usepackage{fullpage}  % somewhat standardized smaller margins (around an inch)
+\usepackage{setspace}  % control line spacing in latex documents
+\usepackage[parfill]{parskip}  % Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{amsmath,amssymb}  % latex math
+\usepackage{empheq} % http://www.ctan.org/pkg/empheq
+\usepackage{bm,upgreek}  % allows you to write bold greek letters (upper & lower case)
+
+% for typsetting algorithm pseudocode see http://en.wikibooks.org/wiki/LaTeX/Algorithms_and_Pseudocode
+\usepackage{algorithmic,algorithm}  
+
+\usepackage{graphicx}  % inclusion of graphics; see: http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+% allow easy inclusion of .tif, .png graphics
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+%\usepackage{subfigure}  % allows subfigures in figure
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{xspace}
+\newcommand{\latex}{\LaTeX\xspace}
+
+\usepackage{color}  % http://en.wikibooks.org/wiki/LaTeX/Colors
+
+\long\def\ans#1{{\color{blue}{\em #1}}}
+\long\def\ansnem#1{{\color{blue}#1}}
+\long\def\boldred#1{{\color{red}{\bf #1}}}
+\long\def\boldred#1{\textcolor{red}{\bf #1}}
+\long\def\boldblue#1{\textcolor{blue}{\bf #1}}
+\long\def\todo#1{\textcolor{red}{\bf TODO: #1}}
+
+% Useful package for syntax highlighting of specific code (such as python) -- see below
+\usepackage{listings}  % http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{textcomp}
+
+%%% The following lines set up using the listings package
+\renewcommand{\lstlistlistingname}{Code Listings}
+\renewcommand{\lstlistingname}{Code Listing}
+
+%%% Specific for python listings
+\definecolor{gray}{gray}{0.5}
+\definecolor{green}{rgb}{0,0.5,0}
+
+\lstnewenvironment{python}[1][]{
+\lstset{
+language=python,
+basicstyle=\footnotesize,  % could also use this -- a little larger \ttfamily\small\setstretch{1},
+stringstyle=\color{red},
+showstringspaces=false,
+alsoletter={1234567890},
+otherkeywords={\ , \}, \{},
+keywordstyle=\color{blue},
+emph={access,and,break,class,continue,def,del,elif ,else,%
+except,exec,finally,for,from,global,if,import,in,i s,%
+lambda,not,or,pass,print,raise,return,try,while},
+emphstyle=\color{black}\bfseries,
+emph={[2]True, False, None, self},
+emphstyle=[2]\color{green},
+emph={[3]from, import, as},
+emphstyle=[3]\color{blue},
+upquote=true,
+morecomment=[s]{"""}{"""},
+commentstyle=\color{gray}\slshape,
+emph={[4]1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+emphstyle=[4]\color{blue},
+literate=*{:}{{\textcolor{blue}:}}{1}%
+{=}{{\textcolor{blue}=}}{1}%
+{-}{{\textcolor{blue}-}}{1}%
+{+}{{\textcolor{blue}+}}{1}%
+{*}{{\textcolor{blue}*}}{1}%
+{!}{{\textcolor{blue}!}}{1}%
+{(}{{\textcolor{blue}(}}{1}%
+{)}{{\textcolor{blue})}}{1}%
+{[}{{\textcolor{blue}[}}{1}%
+{]}{{\textcolor{blue}]}}{1}%
+{<}{{\textcolor{blue}<}}{1}%
+{>}{{\textcolor{blue}>}}{1},%
+%framexleftmargin=1mm, framextopmargin=1mm, frame=shadowbox, rulesepcolor=\color{blue},#1
+framexleftmargin=1mm, framextopmargin=1mm, frame=single,#1
+}}{}
+%%% End python code listing definitions
+
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\cov}{cov}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Begin Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+    {\Large {\bf ISTA 421/521 -- Homework 4}} \\
+    \boldred{Due: Tuesday, November 13, 10pm} \\
+    20 pts total for Undergrads, 25 pts total for Grads\\
+\end{center}
+
+\begin{flushright}
+STUDENT NAME %% Fill in your name here
+
+Undergraduate / Graduate %% select which you are!
+\end{flushright}
+
+\vspace{1cm}
+{\Large {\bf Instructions}}
+
+In this assignment you are required to write 2 python scripts, for problems 6 and 7.  This script for problem 6 should be named {\tt plot\_laplace\_approx.py}, and the script for problem 7 should be named {\tt pi\_sample\_estimate.py}.
+
+All problems require that you provide some ``written'' answer, and in problem 6 this will include figures (and possibly elsewhere as well).  (You can use \latex or any other system (including handwritten; plots, of course, must be program-generated) as long as the final version is in PDF.)
+
+\boldred{The final submission will include (minimally) the 2 python scripts and a PDF version of your written part of the assignment.  You are required to create either a .zip or tarball (.tar.gz / .tgz) archive of all of the files for your submission and submit your archive to the d2l dropbox by the date/time deadline above.}
+
+NOTE: Problem 4 is required for Graduate students only; Undergraduates may complete it for extra credit equal to the point value.
+
+(FCMA refers to the course text: Rogers and Girolami (2012), {\em A First Course in Machine Learning}.  For general notes on using \latex to typeset math, see: {\tt http://en.wikibooks.org/wiki/LaTeX/Mathematics})
+\vspace{.5cm}
+
+%%%%%%%%%%%%%%%%
+%%%     Problems
+%%%%%%%%%%%%%%%%
+
+\newpage
+\begin{itemize}
+
+%%%     Problem 1
+\item[1.]  [2 points]
+Adapted from {\bf Exercise 3.1} of FCMA p.133:
+
+For $\alpha, \beta = 1$, the beta distribution becomes uniform between $0$ and $1$.  In particular, if the probability of a coin landing heads is given by $r$ and a beta prior is placed over $r$, with parameters $\alpha = 1$, $\beta = 1$, this prior can be written as follows:
+\begin{eqnarray*}
+p(r) = 1 ~~~~ (0 \leq r \leq 1)
+\end{eqnarray*}
+Using this prior, compute the posterior density for $r$ if $y$ heads are observed in $N$ tosses (i.e., multiply this prior by the binomial likelihood and manipulate the result to obtain something that looks like a beta density).
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 2
+\item[2.]  [2 points]
+Adapted from {\bf Exercise 3.2} of FCMA p.134:
+
+Repeat the previous exercise for the following prior, also a particular form of the Beta density:
+\begin{eqnarray*}
+p(r) = 
+\begin{cases}
+2r & 0 \leq r \leq 1 \\
+0 & \mathrm{otherwise}
+\end{cases}
+\end{eqnarray*}
+What are the values of the prior parameters $\alpha$ and $\beta$ that result in $p(r)= 2r$?
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 3
+\item[3.]  [3 points]
+Adapted from {\bf Exercise 3.5} of FCMA p.134:
+
+If a random variable $R$ has a beta density
+\begin{eqnarray*}
+p(r) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta)} r^{\alpha - 1}(1 - r)^{\beta - 1},
+\end{eqnarray*}
+derive an expression for the expected value of $r$, $\mathbb{E}_{p(r)}\{r\}$.  You will need the following identity for the gamma function:
+\begin{eqnarray*}
+\Gamma(n + 1) = n \Gamma(n).
+\end{eqnarray*}
+Hint: use the fact that
+\begin{eqnarray*}
+\int_{r=0}^{r=1} r^{\alpha - 1}(1 - r)^{b - 1}~\mathrm{d}r = \frac{\Gamma(a) \Gamma(b)}{\Gamma(a + b)}.
+\end{eqnarray*}
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 4
+\item[4.]  [5 points; \boldred{Required only for Graduates}]
+Adapted from {\bf Exercise 3.12} of FCMA p.135:
+
+When performing a Bayesian analysis of the Olympics data, we assumed that $\sigma^2$ was known.  If instead we assume that $\mathbf{w}$ is known and an inverse Gamma prior is placed on $\sigma^2$
+\begin{eqnarray*}
+p(\sigma^2 | \alpha, \beta) = \frac{\beta^{\alpha}}{\Gamma(\alpha)} (\sigma^2)^{-\alpha-1} \exp \left\{-\frac{\beta}{\sigma^2} \right\},
+\end{eqnarray*}
+the posterior over $\sigma^2$ will also be inverse Gamma.  Derive the posterior parameters.  
+%Also, explain why this is a better prior than a Gaussian density.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 5
+\item[5.]  [5 points]
+Adapted from {\bf Exercise 4.2} of FCMA p.165-166:
+
+In Chapter 3, we computed the posterior density over $r$, the probability of a coin giving heads, using a beta prior and a binomial likelihood.  Recalling that the beta prior, with parameters $\alpha$ and $\beta$, is given by
+\begin{eqnarray*}
+p(r | \alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta)} r^{\alpha - 1} (1 - r)^{\beta - 1}
+\end{eqnarray*}
+and the binomial likelihood, assuming $y$ heads in $N$ throws, is given by
+\begin{eqnarray*}
+p(y | r, N) = {y \choose N} r^{y} (1 - r)^{N-y}
+\end{eqnarray*}
+compute the Laplace approximation to the posterior.  (Note, you should be able to obtain a closed-form solution for the MAP value, $\hat{r}$, by setting the log posterior to zero, differentiating, equating to zero and solving for $r$.)
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 6
+\item[6.]  [4 points]
+Adapted from {\bf Exercise 4.3} of FCMA p.166:
+
+In the previous exercise you computed the Laplace approximation to the true beta posterior.  In this problem, plot both the true beta posterior and the Laplace approximation for the three sets of values:
+\begin{enumerate}
+\item $\alpha = 5$, $\beta = 5$, $N = 20$, and $y = 10$,
+\item $\alpha = 3$, $\beta = 15$, $N = 10$, and $y = 3$,
+\item $\alpha = 1$, $\beta = 30$, $N = 10$, and $y = 3$.
+\end{enumerate}
+Be sure to clearly indicate the values in your plot captions.  Include how the two distributions (the true beta posterior and the Laplace approximation) compare in each case.  Include the python script you use to generate these plots; the script should be named {\tt plot\_laplace\_approx.py}.  {\bf Suggestion}: for plotting the beta and Gaussian (Normal) distributions, use {\tt scipy.stats.beta} and {\tt scipy.stats.normal} to create the beta and Gaussian random variables, and use the {\tt pdf(x)} method for each to generate the curves.  Note that for {\tt scipy.stats.normal}, the mean is the location ({\tt loc}) parameter, and the sigma is the {\tt scale} parameter.  Also, {\tt scipy.stats.normal} expects the scale parameter to be the standard deviation (i.e., take the square root: {\tt math.sqrt(x)}) of the variance you'll compute for the Laplace approximation.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%     Problem 7
+\item[7.]  [4 points]
+Adapted from {\bf Exercise 4.4} of FCMA p.166:
+
+Given the expression for the area of a circle, $A = \pi r^2$, and using only uniformly distributed random variates, devise a sampling approach for computing $\pi$.  Describe your method in detail and provide you script to do the estimation -- this script should be called {\tt pi\_sample\_estimate.py}.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+\end{itemize}
+
+\end{document}
+
