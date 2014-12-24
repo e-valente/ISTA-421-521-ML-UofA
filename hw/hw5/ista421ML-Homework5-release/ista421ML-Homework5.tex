@@ -1,0 +1,268 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Declarations (skip to Begin Document, line 112, for parts you fill in)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt]{article}
+
+\usepackage{geometry}  % Lots of layout options.  See http://en.wikibooks.org/wiki/LaTeX/Page_Layout
+\geometry{letterpaper}  % ... or a4paper or a5paper or ... 
+\usepackage{fullpage}  % somewhat standardized smaller margins (around an inch)
+\usepackage{setspace}  % control line spacing in latex documents
+\usepackage[parfill]{parskip}  % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{hyperref}
+
+
+\usepackage{amsmath,amssymb}  % latex math
+\usepackage{empheq} % http://www.ctan.org/pkg/empheq
+\usepackage{bm,upgreek}  % allows you to write bold greek letters (upper & lower case)
+
+% for typsetting algorithm pseudocode see http://en.wikibooks.org/wiki/LaTeX/Algorithms_and_Pseudocode
+\usepackage{algorithm}  
+
+\usepackage{graphicx}  % inclusion of graphics; see: http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+% allow easy inclusion of .tif, .png graphics
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\usepackage{xspace}
+\newcommand{\latex}{\LaTeX\xspace}
+
+\usepackage{color}  % http://en.wikibooks.org/wiki/LaTeX/Colors
+
+\long\def\ans#1{{\color{blue}{\em #1}}}
+\long\def\ansnem#1{{\color{blue}#1}}
+\long\def\boldred#1{{\color{red}{\bf #1}}}
+
+% Useful package for syntax highlighting of specific code (such as python) -- see below
+\usepackage{listings}  % http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{textcomp}
+
+%%% The following lines set up using the listings package
+\renewcommand{\lstlistlistingname}{Code Listings}
+\renewcommand{\lstlistingname}{Code Listing}
+
+%%% Specific for python listings
+\definecolor{gray}{gray}{0.5}
+\definecolor{green}{rgb}{0,0.5,0}
+
+\lstnewenvironment{python}[1][]{
+\lstset{
+language=python,
+basicstyle=\footnotesize,  % could also use this -- a little larger \ttfamily\small\setstretch{1},
+stringstyle=\color{red},
+showstringspaces=false,
+alsoletter={1234567890},
+otherkeywords={\ , \}, \{},
+keywordstyle=\color{blue},
+emph={access,and,break,class,continue,def,del,elif ,else,%
+except,exec,finally,for,from,global,if,import,in,i s,%
+lambda,not,or,pass,print,raise,return,try,while},
+emphstyle=\color{black}\bfseries,
+emph={[2]True, False, None, self},
+emphstyle=[2]\color{green},
+emph={[3]from, import, as},
+emphstyle=[3]\color{blue},
+upquote=true,
+morecomment=[s]{"""}{"""},
+commentstyle=\color{gray}\slshape,
+emph={[4]1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+emphstyle=[4]\color{blue},
+literate=*{:}{{\textcolor{blue}:}}{1}%
+{=}{{\textcolor{blue}=}}{1}%
+{-}{{\textcolor{blue}-}}{1}%
+{+}{{\textcolor{blue}+}}{1}%
+{*}{{\textcolor{blue}*}}{1}%
+{!}{{\textcolor{blue}!}}{1}%
+{(}{{\textcolor{blue}(}}{1}%
+{)}{{\textcolor{blue})}}{1}%
+{[}{{\textcolor{blue}[}}{1}%
+{]}{{\textcolor{blue}]}}{1}%
+{<}{{\textcolor{blue}<}}{1}%
+{>}{{\textcolor{blue}>}}{1},%
+%framexleftmargin=1mm, framextopmargin=1mm, frame=shadowbox, rulesepcolor=\color{blue},#1
+framexleftmargin=1mm, framextopmargin=1mm, frame=single,#1
+}}{}
+%%% End python code listing definitions
+
+%%% Specific for matlab listings
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+ 
+\lstnewenvironment{matlab}[1][]{
+\lstset{ %
+  language=Matlab,                % the language of the code
+  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=t,                   % sets the caption-position to top
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*,...}               % if you want to add more keywords to the set
+  framexleftmargin=1mm, framextopmargin=1mm, frame=single,#1 % display caption
+} }{}
+%%% End matlab code listing definitions
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Begin Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+    {\Large {\bf ISTA 421/521 -- Homework 5}} \\
+    \boldred{Due: Monday, December 15, 5pm} \\
+    16 points total
+\end{center}
+
+\begin{flushright}
+STUDENT NAME %% Fill in your name here
+
+Undergraduate / Graduate %% select which you are!
+\end{flushright}
+
+\vspace{1cm}
+{\Large {\bf Instructions}}
+
+In this assignment you are required to work with the following set of python scripts: {\tt utils.py, train\_ml\_class.py}. Be sure that the provided auxiliary scripts are in the same folder: {\tt sample\_images.py, gradient.py, load\_MNIST.py, display\_network.py}
+
+You will run the script {train\_ml\_class.py}.  Since some parts are not implemented, it will break at the beginning. We recommend you use the {\tt sys.exit()} command after each part that you implement -- this will gracefully exit the script at that point.  You must first {\tt import sys} in order to make the {\tt sys} module available.
+
+Some problems require you to include a plot of the weights that you found with the autoencoder.
+
+To run the problems, be sure to download the MNIST dataset from:
+\begin{itemize}
+\item Training Images: \url{http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz}
+\item Training Labels: \url{http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz}
+\end{itemize}
+
+We have provided code to load these files into memory, you just need to set the right filepath when you call the function {\tt load\_MNIST\_images}.
+
+The problems are adapted from the UFDL demo at Stanford:\\
+\url{http://ufldl.stanford.edu/wiki/index.php/Neural_Networks}. 
+
+Feel free to follow that tutorial to help you through your implementation.
+
+\vspace{.5cm}
+
+%%%%%%%%%%%%%%%%
+%%%     Problems
+%%%%%%%%%%%%%%%%
+
+\newpage
+\begin{itemize}
+
+%%%     Problem 1
+\item[1.] [3 points]  Exercise 1: Load and visualize MNIST:  
+
+You will need to the files {\tt display\_network.py} and {\tt load\_MNIST.py} into the {\em same} directory.
+Run the {\tt train\_ml\_class.py} code to load and visualize the MNIST dataset.  
+Currently the code loads the training images, loads 10K images and visualizes 100.  
+
+Modify the loading part in the train\_ml\_class.py so you display 10, 50 and 100 subsets of MNIST.
+
+Tip: Use the {\tt sys.exit()} command to stop execution of the code, since it will break if you have not completed the other parts of the assignment.  You must first {\tt import sys} in order to make the {\tt sys} module available.
+
+{\bf Solution:} 
+
+%%%     Problem 2
+\item[2.] [4 point]
+Exercise 2:  
+Write the initialization script for the parameters in an autoencoder with a single hidden layer:  
+
+In class we learned that a NN'€™s parameters are the weights $\mathbf{w}$ and the offset parameters $b$.  
+Write a script where you initialize them given the size of the hidden layer and the visible layer. 	
+
+Then  reshape them and concatenate them so they are all allocated in a single parameter vector.  
+
+Example: For an autoencoder with visible layer size 2 and hidden size 3, we would have 6 weights ($\mathbf{w}_1$) from the visible layer to the hidden layer and 6 more weights ($\mathbf{w}_2$) from the hidden layer to the output layer; there are also one bias term ($b_1$) with 3 parameters, one for each of the hidden nodes, and another bias term ($b_2$) with 2 parameters to the output layer. This will make a total of 6+6+3+2 = 17 parameters. The output of your script should be a vector of 1x17 elements, with order [$\mathbf{w}_1$, $\mathbf{w}_2$, $b_1$, $b_2$].  
+
+Tip: use the {\tt np.concatenate} function to put the vectors together in the desired order, and the {\tt np.reshape} function to put the result vector in the shape $1 \times size$.  
+
+{\bf Solution:} 
+
+
+
+
+%%%     Problem 4
+\item[4.] [4 point]
+Exercise 3:  
+Write the cost function for an autoencoder as well as the gradient for each of the parameters.
+  
+In class we learned that we can use gradient descent to train a NN.  In this exercise we will use a more  refined version of this called LBFGS (\url{http://en.wikipedia.org/wiki/Limited-memory_BFGS}), which is readily implemented in the optimization library of scipy.  For your convenience the implementation is ready to run.
+
+To use it, you need to define functions for the cost and for the gradient of each parameter. Do this based on the error functions $\delta$ that we defined in the slides in class.
+
+The functions use the data to do a forward pass of the network, calculates the overall error, and then calculate the gradient per each parameter.
+
+Tip: In the code, there is a flag called {\tt debug}; if set to {\tt True}, it will run a debugging code to check if your gradient is correct. 
+
+You might want to load fewer images in this step, so you do not spend too much time waiting for all the examples.
+
+The gradient has to be a matrix of the same size as the parameter matrix, while the cost has to be the evaluation of the cost after data has passed through.
+
+
+{\bf Solution:} 
+
+\newpage
+%%%     Problem 4
+\item[4.] [3 point]
+Exercise 4:  
+
+If your gradient is correct, now load the 10,000 images and run the code.
+
+Test the code and change the size of the hidden layer to 50, 100, 150 and 250. By the end, the code creates an image called {\tt weights} (which overwrites the one in ex.~1) and it prints the weights obtained after training. 
+
+Report those weights and comment of the difference between using different sizes in the hidden layer.
+
+{\bf Solution:} 
+
+
+
+\item[4.] [2 point]
+Exercise 5:  
+
+Once everything is running, run the code {\tt stacked\_ae\_hw.py}, which implements the stacked autoencoder concept that we saw in class on Thursday. At the end you should have a report of your results accuracy.
+Change the number of training examples to 100, 500, 1000, 10000 and report the results here.
+
+Tip: You might want to check how much time it takes to run on your computer before-hand and consider leaving it overnight.
+
+{\bf Solution:} 
+%%% For latex users: code to insert figure
+%\begin{figure}[htb]
+%\begin{center}
+%\includegraphics[width=7cm]{file}
+%\caption{Your caption}
+%\end{center}
+%\end{figure}
+
+
+ 
+
+%%% For latex users: code to insert figure
+%\begin{figure}[htb]
+%\begin{center}
+%\includegraphics[width=10cm]{file}
+%\caption{Your caption}
+%\end{center}
+%\end{figure}
+
+
+\end{itemize}
+
+\end{document}

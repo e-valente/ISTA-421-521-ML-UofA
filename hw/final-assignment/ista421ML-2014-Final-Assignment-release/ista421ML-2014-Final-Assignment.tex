@@ -1,0 +1,234 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Declarations (skip to Begin Document, line 101, for parts you fill in)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt]{article}
+
+\usepackage{geometry}  % Lots of layout options.  See http://en.wikibooks.org/wiki/LaTeX/Page_Layout
+\geometry{letterpaper}  % ... or a4paper or a5paper or ... 
+\usepackage{fullpage}  % somewhat standardized smaller margins (around an inch)
+\usepackage{setspace}  % control line spacing in latex documents
+\usepackage[parfill]{parskip}  % Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{amsmath,amssymb}  % latex math
+\usepackage{empheq} % http://www.ctan.org/pkg/empheq
+\usepackage{bm,upgreek}  % allows you to write bold greek letters (upper & lower case)
+
+% allows strikethroughs in math via \cancel{math text goes here}
+\usepackage{cancel}
+
+% for typsetting algorithm pseudocode see http://en.wikibooks.org/wiki/LaTeX/Algorithms_and_Pseudocode
+\usepackage{algorithmic,algorithm}  
+
+\usepackage{graphicx}  % inclusion of graphics; see: http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+% allow easy inclusion of .tif, .png graphics
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\usepackage{subfigure}  % allows subfigures in figure
+%\usepackage{caption}
+%\usepackage{subcaption}
+
+\usepackage{xspace}
+\newcommand{\latex}{\LaTeX\xspace}
+
+\usepackage{color}  % http://en.wikibooks.org/wiki/LaTeX/Colors
+
+\long\def\ans#1{{\color{blue}{\em #1}}}
+\long\def\ansnem#1{{\color{blue}#1}}
+\long\def\boldred#1{{\color{red}{\bf #1}}}
+\long\def\boldred#1{\textcolor{red}{\bf #1}}
+\long\def\boldblue#1{\textcolor{blue}{\bf #1}}
+\long\def\todo#1{\textcolor{red}{\bf TODO: #1}}
+
+% Useful package for syntax highlighting of specific code (such as python) -- see below
+\usepackage{listings}  % http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
+\usepackage{textcomp}
+
+%%% The following lines set up using the listings package
+\renewcommand{\lstlistlistingname}{Code Listings}
+\renewcommand{\lstlistingname}{Code Listing}
+
+%%% Specific for python listings
+\definecolor{gray}{gray}{0.5}
+\definecolor{green}{rgb}{0,0.5,0}
+
+\lstnewenvironment{python}[1][]{
+\lstset{
+language=python,
+basicstyle=\footnotesize,  % could also use this -- a little larger \ttfamily\small\setstretch{1},
+stringstyle=\color{red},
+showstringspaces=false,
+alsoletter={1234567890},
+otherkeywords={\ , \}, \{},
+keywordstyle=\color{blue},
+emph={access,and,break,class,continue,def,del,elif ,else,%
+except,exec,finally,for,from,global,if,import,in,i s,%
+lambda,not,or,pass,print,raise,return,try,while},
+emphstyle=\color{black}\bfseries,
+emph={[2]True, False, None, self},
+emphstyle=[2]\color{green},
+emph={[3]from, import, as},
+emphstyle=[3]\color{blue},
+upquote=true,
+morecomment=[s]{"""}{"""},
+commentstyle=\color{gray}\slshape,
+emph={[4]1, 2, 3, 4, 5, 6, 7, 8, 9, 0},
+emphstyle=[4]\color{blue},
+literate=*{:}{{\textcolor{blue}:}}{1}%
+{=}{{\textcolor{blue}=}}{1}%
+{-}{{\textcolor{blue}-}}{1}%
+{+}{{\textcolor{blue}+}}{1}%
+{*}{{\textcolor{blue}*}}{1}%
+{!}{{\textcolor{blue}!}}{1}%
+{(}{{\textcolor{blue}(}}{1}%
+{)}{{\textcolor{blue})}}{1}%
+{[}{{\textcolor{blue}[}}{1}%
+{]}{{\textcolor{blue}]}}{1}%
+{<}{{\textcolor{blue}<}}{1}%
+{>}{{\textcolor{blue}>}}{1},%
+%framexleftmargin=1mm, framextopmargin=1mm, frame=shadowbox, rulesepcolor=\color{blue},#1
+framexleftmargin=1mm, framextopmargin=1mm, frame=single,#1
+}}{}
+%%% End python code listing definitions
+
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\cov}{cov}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Begin Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+    {\Large {\bf ISTA 421/521 - Final Take-home Assignment}} \\
+    \boldred{Due: Monday, December 15, 5pm} \\
+    24 pts total undergraduate / 30 pts total graduate \\
+    \vspace{1cm}
+\end{center}
+
+\begin{flushright}
+STUDENT NAME  %% Fill in your name here
+
+Undergraduate / Graduate %% select which you are!
+\end{flushright}
+
+\vspace{1cm}
+
+{\Large {\bf Instructions}}
+
+You must work on the problems \boldred{INDEPENDENTLY}, not in groups.
+\begin{center}\boldred{The work on each problem must be your own.}\end{center}
+
+Include in your final submission the pdf of written answers along with separate files for any python scripts that you write in support of answering the questions (although no scripts are needed for this assignment; if you do write scripts, clearly note in your pdf written answers which script filenames were used).  You are required to create either a .zip or tarball (.tar.gz / .tgz) archive of all of the files for your submission and submit the archive to the D2L dropbox by the date/time deadline above.
+
+NOTE: Problem~\ref{prob:empoisson} is \boldblue{required for graduate students only}; undergraduates may complete them for extra credit equal to the point value.
+
+(FCMA refers to the course text: Rogers and Girolami (2012), {\em A First Course in Machine Learning}.)
+
+\vspace{.5cm}
+
+%%%%%%%%%%%%%%%%
+%%%     Problems
+%%%%%%%%%%%%%%%%
+
+\newpage
+\begin{enumerate}
+
+
+%%%   Problem 1
+\item \label{prob:bayesgauss} [4 points]
+Adapted from {\bf Exercise 5.4} of FCMA p.204:
+
+Compute the maximum likelihood estimates of $q_{mc}$ for class $c$ of a Bayesian classifier with multinomial class-conditionals and a set of $N_c$, $M$-dimensional objects belonging to class $c$: $\mathbf{x}_1, ..., \mathbf{x}_{N_c}$.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%   Problem 2
+\item \label{prob:bayesmultinomial} [4 points]
+Adapted from {\bf Exercise 5.5} of FCMA p.204:
+
+For a Bayesian classifier with multinomial class-conditionals with $M$-dimensional parameters $\mathbf{q}_c$, compute the posterior Dirichlet for class $c$ when the prior over $\mathbf{q}_c$ is a Dirichlet with constant parameter $\alpha$ and the observations belonging to class $c$ are the $N_c$ observations $\mathbf{x}_1, ..., \mathbf{x}_{N_c}$.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%   Problem 3
+\item \label{prob:emvariance} [4 points]
+Adapted from {\bf Exercise 6.1} of FCMA p.234:
+
+Derive the EM update for the variance of the $d$th dimension and the $k$th component, $\sigma^2_{kd}$, when the cluster components have a diagonal Gaussian Likelihood:
+\begin{eqnarray*}
+p(\mathbf{x}_n | z_{nk} = 1, \mu_{k1}, ..., \mu_{KD}, \sigma^2_{k1}, ..., \sigma^2_{kD}) = \prod_{d=1}^D \mathcal{N}(\mu_{kd}, \sigma^2_{kd})
+\end{eqnarray*}
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%   Problem 4
+\item \label{prob:empoisson} [6 points; \boldred{Required only for Graduates}]
+Adapted from {\bf Exercise 6.6} of FCMA p.235:
+
+Derive an EM algorithm for fitting a mixture of Poisson distributions.  Assume you observe $N$ integer counts, $x_1, ..., x_N$.  The likelihood is:
+\begin{eqnarray*}
+p(\mathbf{X}|\boldsymbol{\Delta}) = \prod_{n=1}^{N} \sum_{k=1}^{K} \pi_k \frac{\lambda_{k}^{x_n} \exp \left\{ - \lambda_k \right\}}{x_{n}!}
+\end{eqnarray*}
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%   Problem 5
+\item {} [2 points]
+
+For a support vector machine, if we remove one of the support vectors from the training set, does the size of the maximum margin decrease, stay the same, or increase for that dataset?  Why?  Also justify your answer by providing a simple, hand-designed dataset (no more than 2-D) in which you identify the support vectors, draw the location of the maximum margin hyperplane, remove one of the support vectors, and draw the location of the resulting maximum margin hyperplane.  You do not have to run any code -- this can be done completely by hand and drawn schematically.
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+%%%   Problem 6
+\item {} [3 points]
+
+Consider the 2-bit XOR problem for which the entire instance space is as follows:
+\begin{table}[h!]
+\centering
+\begin{tabular}{|r|r|r|}
+\hline
+$t$ & $x_1$ & $x_2$ \\
+\hline
+$-1$ & $-1$ & $-1$ \\
+$+1$ & $-1$ & $1$ \\
+$+1$ & $1$ & $-1$ \\
+$-1$ & $1$ & $1$ \\
+\hline
+\end{tabular}
+\label{tab:myfirsttable}
+\end{table}
+In each row, $x_1$ and $x_2$ are the coordinates and $t$ is the class for the point.  These instances are not linearly separable, but they are separable with a polynomial kernel.  Recall that the polynomial kernel is of the form $\kappa (\mathbf{x}_i, \mathbf{x}_j) = (\mathbf{x}_i \top \mathbf{x}_j + c)^d$ where $c$ and $d$ are integers.  Select (by hand!) values for $c$ and $d$ that yield a space in which the instances above are linearly separable.  Write down the mapping $\Phi$ to which this kernel corresponds, write down ${\Phi}(x)$ for each instance above, and write down the parameters of a hyperplane in the expanded space that perfectly classifies the instances (there are a range of possible hyperplanes, just pick one set of hyperplane parameters that satisfies separating the points -- you are not maximizing the margin here, just coming up with one possible separating hyperplane).  Again, this can be done without writing code or deriving an analytic solution!
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%   Problem 7
+\item {} [2 points]
+
+Why does the kernel trick allow us to solve SVMs with high dimensional feature spaces without significantly increasing the running time?  
+
+{\bf Solution.} $<$Solution goes here$>$
+
+
+
+%%%   Problem 8
+\item {} [5 points]
+In this course we introduced the Metropolis-Hastings algorithm.  Provide the following: (a) describe the problem it is designed to solve, including how it solves this problem by avoiding a potentially intractable problem; (b) describe the basic procedure; (c) describe the role of the proposal distribution.
+
+
+
+\end{enumerate}
+
+\end{document}
